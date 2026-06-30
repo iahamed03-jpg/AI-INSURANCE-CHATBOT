@@ -58,7 +58,7 @@ public class ChatService {
             cacheService.put(userText, reply);
             return new ChatResponse(reply, ollamaProperties.getModel(), System.currentTimeMillis());
         } catch (Exception ex) {
-            String fallbackReply = "Ollama is currently unavailable. Please verify the service at " + endpoint + ".";
+            String fallbackReply = "Ollama  is currently unavailable. Please verify the service at " + endpoint + ".";
             cacheService.put(userText, fallbackReply);
             return new ChatResponse(fallbackReply, ollamaProperties.getModel(), System.currentTimeMillis());
         }
