@@ -25,12 +25,9 @@ public class RagService {
     }
 
     public String buildPrompt(String userText) {
-        List<String> documents = documentService.loadDocuments();
-        List<String> vectorMatches = vectorStoreService.search(userText);
-        String context = Stream.concat(documents.stream(), vectorMatches.stream())
-                .distinct()
-                .collect(Collectors.joining("\n"));
+        //List<String> documents = documentService.loadDocuments();
+        List<String> contextDocuments = vectorStoreService.search(userText);
 
-        return promptBuilder.build(userText, context);
+        return promptBuilder.build(userText, String.join("\n", contextDocuments));
     }
 }
