@@ -2,6 +2,7 @@ package com.insurance.ai.chatbot.aiinsurnacechatbot.vector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,11 @@ import jakarta.annotation.PostConstruct;
 public class VectorStoreService {
     private final List<VectorDocument> vectorStore = new ArrayList<>();
     private final EmbeddingService embeddingService;
-    private final DocumentService documentService;
-    public VectorStoreService(EmbeddingService embeddingService, DocumentService documentService) {
+    private AtomicInteger idCounter = new AtomicInteger();
+    public VectorStoreService(EmbeddingService embeddingService) {
         this.embeddingService = embeddingService;
-        this.documentService = documentService;
     }
-    @PostConstruct
+    /*@PostConstruct
     public void load(){
         List<String> documents = documentService.loadDocuments();
         int id = 1;
@@ -30,6 +30,13 @@ public class VectorStoreService {
             System.out.println("Loaded document: " + doc + " with embedding: " + embedding.length);
         }
         System.out.println("Loaded " + vectorStore.size() + " documents into the vector store.");
+    }*/
+
+    public void addDocument(String text) {
+        float[] embedding = embeddingService.embed(text);
+        String id = String.valueOf(idCounter.incrementAndGet());
+        vectorStore.add(new VectorDocument(id, text, embedding));
+        System.out.println("Added document: " + text + " with embedding: " + embedding.length);
     }
 
     public List<String> search(String question){
