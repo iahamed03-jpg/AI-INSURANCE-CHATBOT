@@ -6,10 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
 
-import com.insurance.ai.chatbot.aiinsurnacechatbot.document.DocumentService;
 import com.insurance.ai.chatbot.aiinsurnacechatbot.embedding.EmbeddingService;
-
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class VectorStoreService {
@@ -36,7 +33,7 @@ public class VectorStoreService {
         float[] embedding = embeddingService.embed(text);
         String id = String.valueOf(idCounter.incrementAndGet());
         vectorStore.add(new VectorDocument(id, text, embedding));
-        System.out.println("Added document: " + text + " with embedding: " + embedding.length);
+        //System.out.println("Added document: " + text + " with embedding: " + embedding.length);
     }
 
     public List<String> search(String question){
