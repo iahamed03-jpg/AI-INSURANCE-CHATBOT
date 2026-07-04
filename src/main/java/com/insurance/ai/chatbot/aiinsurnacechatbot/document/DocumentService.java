@@ -32,9 +32,9 @@ public class DocumentService {
     public void process(MultipartFile file) {
         try {
             String extractedText = pdfParserService.extractText(file);
-            System.out.println("Extracted text from PDF: " + extractedText);
+            //System.out.println("Extracted text from PDF: " + extractedText);
             List<String> chunks = chunkingService.chunkText(extractedText);
-            System.out.println("Document chunks: " + chunks);
+            //System.out.println("Document chunks: " + chunks);
             for (String chunk : chunks) {
                 vectorStoreService.addDocument(chunk);
             }
